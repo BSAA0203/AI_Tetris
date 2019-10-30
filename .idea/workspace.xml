@@ -13,8 +13,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Source/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="19" column="50" lean-forward="true" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
+            <state relative-caret-position="160">
+              <caret line="22" column="37" lean-forward="true" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -25,8 +25,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Source/Playtetris.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1306">
-              <caret line="339" column="34" lean-forward="true" selection-start-line="339" selection-start-column="34" selection-end-line="339" selection-end-column="34" />
+            <state relative-caret-position="145">
+              <caret line="216" column="13" lean-forward="true" selection-start-line="216" selection-start-column="13" selection-end-line="225" selection-end-column="118" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Source/AItetris.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="212">
+              <caret line="545" column="27" selection-start-line="545" selection-start-column="12" selection-end-line="545" selection-end-column="27" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -35,10 +47,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Source/AItetris.py">
+        <entry file="file://$PROJECT_DIR$/Source/testsample.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="100" column="13" selection-start-line="100" selection-start-column="13" selection-end-line="100" selection-end-column="13" />
+            <state relative-caret-position="161">
+              <caret line="540" column="29" lean-forward="true" selection-start-line="540" selection-start-column="29" selection-end-line="540" selection-end-column="29" />
               <folding>
                 <element signature="e#162#175#0" expanded="true" />
               </folding>
@@ -57,9 +69,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>MFont</find>
-      <find>math</find>
-      <find>copy</find>
+      <find>Pixel</find>
+      <find>keys</find>
+      <find>is_on</find>
+      <find>remove_complete_lines</find>
+      <find>current_move</find>
+      <find>current_move`</find>
+      <find>add_</find>
+      <find>add_to</find>
+      <find>draw_next</find>
+      <find>draw_st</find>
+      <find>best</find>
+      <find>draw_b</find>
+      <find>one_step_reward</find>
+      <find>draw_</find>
+      <find>get_parameters</find>
+      <find>is_co</find>
+      <find>remove_</find>
+      <find>MAX_GAMES</find>
+      <find>gameover</find>
+      <find>show_text_screen</find>
+      <find>TEXTSHADOWCOLOR</find>
+      <find>weights</find>
+      <find>weight0Array</find>
+      <find>explore_change</find>
+      <find>check_for_key_press</find>
+      <find>PAUSE</find>
+      <find>remove</find>
+      <find>last_lateral_time</find>
+      <find>moving_down</find>
+      <find>last_move_down_time</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -69,24 +108,26 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Source/tetris.py" />
-        <option value="$PROJECT_DIR$/Source/Main.py" />
-        <option value="$PROJECT_DIR$/Source/Playtetris.py" />
         <option value="$PROJECT_DIR$/Source/test.py" />
+        <option value="$PROJECT_DIR$/Source/Playtetris.py" />
+        <option value="$PROJECT_DIR$/Source/Main.py" />
+        <option value="$PROJECT_DIR$/Source/testsample.py" />
         <option value="$PROJECT_DIR$/Source/AItetris.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="-12" />
+    <option name="y" value="-12" />
+    <option name="width" value="984" />
+    <option name="height" value="1044" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -97,18 +138,12 @@
             <path>
               <item name="AI_Tetris" type="b2602c69:ProjectViewProjectNode" />
               <item name="AI_Tetris" type="462c0819:PsiDirectoryNode" />
-              <item name="img" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AI_Tetris" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AI_Tetris" type="462c0819:PsiDirectoryNode" />
               <item name="Source" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -133,7 +168,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.AItetris">
+  <component name="RunManager" selected="Python.Main">
     <configuration name="AItetris" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AI_Tetris" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -218,7 +253,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="tetris" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="testsample" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AI_Tetris" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -230,7 +265,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\UNKNOWN\Documents\GitHub\AI_Tetris\Source\Main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Source/testsample.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -241,11 +276,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.AItetris" />
-        <item itemvalue="Python.test" />
         <item itemvalue="Python.Main" />
+        <item itemvalue="Python.AItetris" />
+        <item itemvalue="Python.testsample" />
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.Playtetris" />
-        <item itemvalue="Python.tetris" />
       </list>
     </recent_temporary>
   </component>
@@ -263,16 +298,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.10115912" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14535345" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20281996" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20248668" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39253998" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -284,45 +319,72 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14535345" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20248668" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/img/tetris.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/Main.py">
+    <entry file="file://$PROJECT_DIR$/Source/test.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/pyautogui/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="19" column="50" lean-forward="true" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="140">
+          <caret line="185" selection-start-line="185" selection-end-line="185" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/Playtetris.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1306">
-          <caret line="339" column="34" lean-forward="true" selection-start-line="339" selection-start-column="34" selection-end-line="339" selection-end-column="34" />
+        <state relative-caret-position="145">
+          <caret line="216" column="13" lean-forward="true" selection-start-line="216" selection-start-column="13" selection-end-line="225" selection-end-column="118" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/test.py">
+    <entry file="file://$PROJECT_DIR$/Source/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="488" selection-start-line="488" selection-end-line="706" />
+        <state relative-caret-position="160">
+          <caret line="22" column="37" lean-forward="true" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
           <folding>
-            <element signature="e#162#175#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/AItetris.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="100" column="13" selection-start-line="100" selection-start-column="13" selection-end-line="100" selection-end-column="13" />
+        <state relative-caret-position="212">
+          <caret line="545" column="27" selection-start-line="545" selection-start-column="12" selection-end-line="545" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Source/testsample.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="540" column="29" lean-forward="true" selection-start-line="540" selection-start-column="29" selection-end-line="540" selection-end-column="29" />
           <folding>
             <element signature="e#162#175#0" expanded="true" />
           </folding>

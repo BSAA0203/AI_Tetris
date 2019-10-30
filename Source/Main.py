@@ -33,7 +33,7 @@ def main():
                     if event.key == pg.K_1: # 1번이 눌렸을 경우 직접 플레이로
                         Playtetris.Run(GAME,FPS,MFont)
                     elif event.key ==  pg.K_2: # 2번이 눌렸을 경우 AI 플레이로
-                        AItetris.Run()
+                        AItetris.Run(GAME,FPS,MFont)
 
         GAME.fill(BLACK)
         TFont = pg.font.SysFont('Snap ITC', 100) # 게임 화면 타이틀 폰트

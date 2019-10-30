@@ -180,10 +180,10 @@ def end(score): # 게임 오버 화면
 
         pg.display.update()
 
-def Run(g,p,m):
+def Run(g,f,m):
     global GAME, FPS, MainFont
     GAME=g
-    FPS=p
+    FPS=f
     MainFont=m
 
     board = getBlankBoard() # 게임 맵에 해당하는 보드 생성
@@ -245,7 +245,7 @@ def Run(g,p,m):
         if fallingPiece != None:
             drawPiece(fallingPiece) # 떨어지는 블록 렌더링
 
-        pg.display.flip() # 디스플레이 업데이트
+        pg.display.update() # 디스플레이 업데이트
         FPS.tick(30) # 30 프레임으로 진행
 
 def CHpiece(board, piece, X=0, Y=0):
