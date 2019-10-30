@@ -35,8 +35,8 @@ BLANK = '.' # 빈 공간 생성
 COLORS =(BLUE, GREEN, RED, YELLOW)
 LIGHTCOLORS = (LIGHTBLUE, LIGHTGREEN, LIGHTRED, LIGHTYELLOW)
 
-XMARGIN = (WIDTH - BOARDWIDTH * BOXSIZE) / 2 # 디스플레이에서 보드까지 떨어진 X 값
-YMARGIN = (HEIGHT -BOARDHEIGHT * BOXSIZE) - 5 # 디스플레이에서 보드까지 떨어진 Y 값
+XMARGIN = int((WIDTH - BOARDWIDTH * BOXSIZE) / 2) # 디스플레이에서 보드까지 떨어진 X 값
+YMARGIN = HEIGHT -(BOARDHEIGHT * BOXSIZE) - 5 # 디스플레이에서 보드까지 떨어진 Y 값
 
 #블록들의 각기 다른 모양 디자인
 S = [               ['.....',
@@ -150,10 +150,6 @@ PIECES = {'S': S,
           'O': O,
           'T': T}
 
-# 폰트 배치 X,Y 좌표 전역 변수
-x = WIDTH / 2
-y = HEIGHT / 2
-
 # 머신 러닝 관련 파라미터 값
 alpha = 0.01
 gamma = 0.9
@@ -171,12 +167,12 @@ def show_text_screen(text): # 화면에 텍스트 배치
     title_rect.center = (int(WIDTH / 2), int(HEIGHT / 2))
     GAME.blit(title_surf, title_rect)
 
-    # Draw the text
+    # 타이틀 텍스트 렌더링
     title_surf, title_rect = make_text_objs(text, MainFont, WHITE)
     title_rect.center = (int(WIDTH / 2) - 3, int(HEIGHT / 2) - 3)
     GAME.blit(title_surf, title_rect)
 
-    # Draw the additional "Press a key to play." text.
+    # 부가 설명 텍스트 렌더링
     press_key_surf, press_key_rect = make_text_objs('Please wait to continue.',
                                                     MainFont, WHITE)
     press_key_rect.center = (int(WIDTH / 2), int(HEIGHT / 2) + 100)
@@ -188,6 +184,7 @@ def show_text_screen(text): # 화면에 텍스트 배치
 
 def Run(g,f,m):
     global GAME, FPS, MainFont
+    global weights,explore_change,games_completed
     GAME=g
     FPS=f
     MainFont=m
@@ -202,11 +199,11 @@ def Run(g,f,m):
         if games_completed > 20 : # 총 20번 돌면 게임 종료
             break
 
-
 def Run_game(weights, explore_change):
     board = getBlankBoard()  # 게임 맵에 해당하는 보드 생성
     score = 0  # 게임 스코어 초기화
-    level, fallsp = ingamesp(score)  # 게임 레벨과 블록 떨어지는 속도 값 초기화
+    level = 0 # 게임 레벨 초기화
+    fallsp = 0.2 # 게임 레벨과 블록 떨어지는 속도 값 초기화
     lastFallTime = time.time()  # 1초 간격으로 블록이 떨어지는 효과를 위한 시간 체킹
     fallingPiece = getNewPiece()  # 떨어지는 블록 생성
     nextPiece = getNewPiece()  # 다음 블록 생성
@@ -248,8 +245,7 @@ def Run_game(weights, explore_change):
                             break  # 떨어지려는 구간이 더 이상 없을 경우 스페이스 기능 block
                     fallingPiece['y'] += i - 1  # 블록을 제일 밑으로 떨어트린다
                 elif event.key == pg.K_UP:  # 윗 방향키가 눌렸을 때
-                    fallingPiece['rotation'] = (fallingPiece['rotation'] + 1) % len(
-                        PIECES[fallingPiece['shape']])  # 블록의 모양 변화
+                    fallingPiece['rotation'] = (fallingPiece['rotation'] + 1) % len(PIECES[fallingPiece['shape']])  # 블록의 모양 변화
                     if not CHpiece(board, fallingPiece):
                         fallingPiece['rotation'] = (fallingPiece['rotation'] - 1) % len(PIECES[fallingPiece['shape']])
 
@@ -257,7 +253,7 @@ def Run_game(weights, explore_change):
             if not CHpiece(board, fallingPiece, Y=1):
                 addToBoard(board, fallingPiece)  # 보드에 해당 블록을 채운다
                 score += remove(board)  # 지워진 라인 수 만큼 스코어 증가
-                level, fallsp = ingamesp(score)  # 레벨과 떨어지는 속도 조정
+                level = int(score/3)  # 레벨은 3배수 단위로
                 fallingPiece = None  # 떨어지는 블록은 현재 없다
             else:
                 # 1초 간격으로 블록이 떨어지게 y 좌표 변화
@@ -292,15 +288,6 @@ def getBlankBoard():
         board.append([BLANK] * BOARDHEIGHT) # 정해둔 맵 가로,세로 사이즈 만큼 보드를 배열로 구성
     return board # 보드 배열 리턴
 
-def ingamesp(score):
-    level = int(score/3) + 1 # 스코어 3배수 마다 레벨 증가
-    if level < 6: # 레벨 6전까진 떨어지는 속도 감소
-        fallsp = 0.6 -(level*0.1)+0.1
-    else: # 6 이후론 일정 속도로 유지
-        fallsp = 0.2
-
-    return level, fallsp # 레벨 과 떨어지는 속도 값 리턴
-
 def getNewPiece():
     shape = random.choice(list(PIECES.keys())) # 랜덤함수로 새로운 블록 지정
     newPiece = {'shape': shape, # 블록의 모양
@@ -320,6 +307,9 @@ def drawStatus(score, level):
 
     levelSurf = MainFont.render('Level: %s' % level, True, WHITE) # 화면에 레벨 텍스트 렌더링
     GAME.blit(levelSurf, (WIDTH - 150, 60))
+
+    ailevelSurf = MainFont.render('Learn level : %s' % games_completed, True, WHITE)  # 화면에 레벨 텍스트 렌더링
+    GAME.blit(ailevelSurf, (0, 120))
 
 def addToBoard(board, piece):
     for x in range(BOXWIDTH):
@@ -409,7 +399,7 @@ def get_parameters(board):
     # Calculate the maximum height of each column
     for i in range(0, BOARDWIDTH):  # Select a column
         for j in range(0, BOARDHEIGHT):  # Search down starting from the top of the board
-            if int(board[i][j]) > 0:  # Is the cell occupied?
+            if board[i][j]!=BLANK:  # Is the cell occupied?
                 heights[i] = BOARDHEIGHT - j  # Store the height value
                 break
 
@@ -424,16 +414,15 @@ def get_parameters(board):
     for i in range(0, BOARDWIDTH):
         occupied = 0  # Set the 'Occupied' flag to 0 for each new column
         for j in range(0, BOARDHEIGHT):  # Scan from top to bottom
-            if int(board[i][j]) > 0:
+            if board[i][j]!=BLANK:
                 occupied = 1  # If a block is found, set the 'Occupied' flag to 1
-            if int(board[i][j]) == 0 and occupied == 1:
+            if board[i][j]==BLANK and occupied == 1:
                 holes += 1  # If a hole is found, add one to the count
 
     height_sum = sum(heights)
     for i in diffs:
         diff_sum += abs(i)
     return height_sum, diff_sum, max_height, holes
-
 
 def get_expected_score(test_board, weights):
     # This function calculates the score of a given board state, given weights and the number
@@ -445,7 +434,6 @@ def get_expected_score(test_board, weights):
     D = weights[3]
     test_score = float(A * height_sum + B * diff_sum + C * max_height + D * holes)
     return test_score
-
 
 def simulate_board(test_board, test_piece, move):
     # This function simulates placing the current falling piece onto the
@@ -467,25 +455,24 @@ def simulate_board(test_board, test_piece, move):
         test_piece['rotation'] = (test_piece['rotation'] + 1) % len(PIECES[test_piece['shape']])
 
     # Test for move validity!
-    if not CHpiece(test_board, test_piece, adj_x=sideways, adj_y=0):
+    if not CHpiece(test_board, test_piece, Ⅹ=sideways, Y=0):
         # The move itself is not valid!
         return None
 
     # Move the test_piece to collide on the board
     test_piece['x'] += sideways
     for i in range(0, BOARDHEIGHT):
-        if CHpiece(test_board, test_piece, adj_x=0, adj_y=1):
+        if CHpiece(test_board, test_piece, Ⅹ=0, Y=1):
             test_piece['y'] = i
 
     # Place the piece on the virtual board
-    if CHpiece(test_board, test_piece, adj_x=0, adj_y=0):
+    if CHpiece(test_board, test_piece, X=0, Y=0):
         CHpiece(test_board, test_piece)
-        test_lines_removed, test_board = remove(test_board)
+        test_lines_removed= remove(test_board)
 
     height_sum, diff_sum, max_height, holes = get_parameters(test_board)
     one_step_reward = 5 * (test_lines_removed * test_lines_removed) - (height_sum - reference_height)
     return test_board, one_step_reward
-
 
 def find_best_move(board, piece, weights, explore_change):
     move_list = []
@@ -509,7 +496,6 @@ def find_best_move(board, piece, weights, explore_change):
         move = best_move
     return move
 
-
 def make_move(move):
     # This function will make the indicated move, with the first digit
     # representing the number of rotations to be made and the seconds
@@ -530,7 +516,6 @@ def make_move(move):
             sideways -= 1
 
     return [rot, sideways]
-
 
 def gradient_descent(board, piece, weights, explore_change):
     move = find_best_move(board, piece, weights, explore_change)

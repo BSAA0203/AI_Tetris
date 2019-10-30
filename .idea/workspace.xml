@@ -8,25 +8,47 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/Source/test.py">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="506">
+                    <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
+                    <folding>
+                      <element signature="e#162#175#0" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/Source/Playtetris.py">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="644">
+                    <caret line="37" column="68" selection-start-line="37" selection-start-column="68" selection-end-line="37" selection-end-column="68" />
+                    <folding>
+                      <element signature="e#0#19#0" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Source/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="22" column="37" lean-forward="true" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Source/Playtetris.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="216" column="13" lean-forward="true" selection-start-line="216" selection-start-column="13" selection-end-line="225" selection-end-column="118" />
+            <state relative-caret-position="207">
+              <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -37,22 +59,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Source/AItetris.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="545" column="27" selection-start-line="545" selection-start-column="12" selection-end-line="545" selection-end-column="27" />
+            <state relative-caret-position="333">
+              <caret line="311" column="37" selection-start-line="311" selection-start-column="37" selection-end-line="311" selection-end-column="37" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Source/testsample.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="540" column="29" lean-forward="true" selection-start-line="540" selection-start-column="29" selection-end-line="540" selection-end-column="29" />
-              <folding>
-                <element signature="e#162#175#0" expanded="true" />
+                <element signature="e#4270#4362#0" />
+                <element signature="e#4409#5154#0" />
               </folding>
             </state>
           </provider>
@@ -69,14 +81,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Pixel</find>
-      <find>keys</find>
-      <find>is_on</find>
-      <find>remove_complete_lines</find>
-      <find>current_move</find>
-      <find>current_move`</find>
-      <find>add_</find>
-      <find>add_to</find>
       <find>draw_next</find>
       <find>draw_st</find>
       <find>best</find>
@@ -90,7 +94,6 @@
       <find>gameover</find>
       <find>show_text_screen</find>
       <find>TEXTSHADOWCOLOR</find>
-      <find>weights</find>
       <find>weight0Array</find>
       <find>explore_change</find>
       <find>check_for_key_press</find>
@@ -99,6 +102,15 @@
       <find>last_lateral_time</find>
       <find>moving_down</find>
       <find>last_move_down_time</find>
+      <find>weights</find>
+      <find>adj</find>
+      <find>pyautogui</find>
+      <find>WINDOWWIDTH</find>
+      <find>BOARDHEIGHT</find>
+      <find>BOARDWIDTH</find>
+      <find>MOVESIDEWAYSFREQ</find>
+      <find>MOVEDOWNFREQ</find>
+      <find>current_move</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -108,10 +120,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Source/tetris.py" />
+        <option value="$PROJECT_DIR$/Source/testsample.py" />
         <option value="$PROJECT_DIR$/Source/test.py" />
         <option value="$PROJECT_DIR$/Source/Playtetris.py" />
         <option value="$PROJECT_DIR$/Source/Main.py" />
-        <option value="$PROJECT_DIR$/Source/testsample.py" />
         <option value="$PROJECT_DIR$/Source/AItetris.py" />
       </list>
     </option>
@@ -168,7 +180,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Main">
+  <component name="RunManager" selected="Python.Main (1)">
     <configuration name="AItetris" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AI_Tetris" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -190,7 +202,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="Main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AI_Tetris" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -232,6 +244,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Start" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="AI_Tetris" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Source" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Source/Start.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AI_Tetris" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -253,33 +286,12 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="testsample" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="AI_Tetris" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Source" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Source/testsample.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Main" />
+        <item itemvalue="Python.Main (1)" />
         <item itemvalue="Python.AItetris" />
-        <item itemvalue="Python.testsample" />
         <item itemvalue="Python.test" />
+        <item itemvalue="Python.Start" />
         <item itemvalue="Python.Playtetris" />
       </list>
     </recent_temporary>
@@ -298,15 +310,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14535345" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14488935" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20248668" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20173536" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39253998" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -343,50 +355,56 @@
     <entry file="file://$PROJECT_DIR$/img/tetris.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/test.py" />
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/pyautogui/__init__.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/pyautogui/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/Source/testsample.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/pyautogui/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/-672117072/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="185" selection-start-line="185" selection-end-line="185" />
+        <state relative-caret-position="302">
+          <caret line="310" column="4" selection-start-line="310" selection-start-column="4" selection-end-line="310" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/Playtetris.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="216" column="13" lean-forward="true" selection-start-line="216" selection-start-column="13" selection-end-line="225" selection-end-column="118" />
+        <state relative-caret-position="644">
+          <caret line="37" column="68" selection-start-line="37" selection-start-column="68" selection-end-line="37" selection-end-column="68" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/Main.py">
+    <entry file="file://$PROJECT_DIR$/Source/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="22" column="37" lean-forward="true" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
+        <state relative-caret-position="506">
+          <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#162#175#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/AItetris.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="545" column="27" selection-start-line="545" selection-start-column="12" selection-end-line="545" selection-end-column="27" />
+        <state relative-caret-position="333">
+          <caret line="311" column="37" selection-start-line="311" selection-start-column="37" selection-end-line="311" selection-end-column="37" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#4270#4362#0" />
+            <element signature="e#4409#5154#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/testsample.py">
+    <entry file="file://$PROJECT_DIR$/Source/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="540" column="29" lean-forward="true" selection-start-line="540" selection-start-column="29" selection-end-line="540" selection-end-column="29" />
+        <state relative-caret-position="207">
+          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
           <folding>
-            <element signature="e#162#175#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>

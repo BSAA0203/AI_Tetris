@@ -34,8 +34,8 @@ BLANK = '.' # 빈 공간 생성
 COLORS =(BLUE, GREEN, RED, YELLOW)
 LIGHTCOLORS = (LIGHTBLUE, LIGHTGREEN, LIGHTRED, LIGHTYELLOW)
 
-XMARGIN = (WIDTH - BOARDWIDTH * BOXSIZE) / 2 # 디스플레이에서 보드까지 떨어진 X 값
-YMARGIN = (HEIGHT -BOARDHEIGHT * BOXSIZE) - 5 # 디스플레이에서 보드까지 떨어진 Y 값
+XMARGIN = int((WIDTH - BOARDWIDTH * BOXSIZE) / 2) # 디스플레이에서 보드까지 떨어진 X 값
+YMARGIN = HEIGHT -(BOARDHEIGHT * BOXSIZE) - 5 # 디스플레이에서 보드까지 떨어진 Y 값
 
 #블록들의 각기 다른 모양 디자인
 S = [               ['.....',
@@ -200,7 +200,7 @@ def Run(g,f,m):
             nextPiece = getNewPiece() # 새로운 블록을 받는다
             lastFallTime = time.time()
 
-            if not CHpiece(board, fallingPiece): # 맵 안에 블록이 다 찰 경우
+            if not CHpiece(board, fallingPiece): # 블록이 게임 보드 보다 높게 쌓였을 경우 게임 오버
                 end(score) # 게임 오버로 변경
 
         for event in pg.event.get():
