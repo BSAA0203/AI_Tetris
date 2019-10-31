@@ -88,7 +88,7 @@ PIECES = {
 # Define learning parameters
 alpha = 0.01
 gamma = 0.9
-MAX_GAMES = 3
+MAX_GAMES = 20
 explore_change = 0.5
 weights = [-1, -1, -1, -30]  # Initial weight vector
 
