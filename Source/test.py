@@ -20,9 +20,9 @@ pyautogui.PAUSE = 0.03
 pyautogui.FAILSAFE = True
 
 FPS = 50
-WINDOWWIDTH = 640
-WINDOWHEIGHT = 480
-BOXSIZE = 20
+WINDOWWIDTH = 800
+WINDOWHEIGHT = 640
+BOXSIZE = 30
 BOARDWIDTH = 10
 BOARDHEIGHT = 20
 BLANK = '0'
@@ -98,7 +98,7 @@ PIECES = {
 # Define learning parameters
 alpha = 0.01
 gamma = 0.9
-MAX_GAMES = 3
+MAX_GAMES = 20
 explore_change = 0.5
 weights = [-1, -1, -1, -30]  # Initial weight vector
 

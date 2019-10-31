@@ -225,9 +225,11 @@ def Run(g,f,m):
                     if not CHpiece(board, fallingPiece):
                         fallingPiece['rotation'] = (fallingPiece['rotation'] - 1) % len(PIECES[fallingPiece['shape']])
                 elif event.key == pg.K_r: # R키가 눌렸을 때
+                    soundObj = pg.mixer.Sound('../Sound/key.wav') # 키보드 관련 효과음 출력
+                    soundObj.play()
                     Run(GAME,FPS,MainFont) # 게임 재시작
 
-        if time.time() - lastFallTime > fallsp:
+        if time.time() - lastFallTime > fallsp: # 블록이 제시간에 맞게 떨어진 경우
             if not CHpiece(board, fallingPiece, Y=1):
                 addToBoard(board, fallingPiece) # 보드에 해당 블록을 채운다
                 score += remove(board) # 지워진 라인 수 만큼 스코어 증가
@@ -263,11 +265,11 @@ def CHpiece(board, piece, X=0, Y=0):
 def getBlankBoard():
     board = []
     for i in range(BOARDWIDTH):
-        board.append([BLANK] * BOARDHEIGHT) # 정해둔 맵 가로,세로 사이즈 만큼 보드를 배열로 구성
+        board.append([BLANK] * BOARDHEIGHT) # 정해둔 보드 가로 세로 사이즈 만큼 보드 배열 생성
     return board # 보드 배열 리턴
 
 def ingamesp(score):
-    level = int(score/3) + 1 # 스코어 3배수 마다 레벨 증가
+    level = int(score/3) # 스코어 3배수 마다 레벨 증가
     if level < 6: # 레벨 6전까진 떨어지는 속도 감소
         fallsp = 0.6 -(level*0.1)+0.1
     else: # 6 이후론 일정 속도로 유지
@@ -300,6 +302,8 @@ def addToBoard(board, piece):
         for y in range(BOXHEIGHT):
             if PIECES[piece['shape']][piece['rotation']][y][x] != BLANK:# 블록이 떨어지려는 해당 보드 구간이 빈 공간이 아닐 경우
                 board[x + piece['x']][y + piece['y']] = piece['color'] # 블록과 같은 색상으로 해당 보드 구간을 채운다
+                blocksound = pg.mixer.Sound('../Sound/selection.wav') # 블록 관련 효과음 출력
+                blocksound.play()
 
 def remove(board):
     removeline = 0
@@ -311,8 +315,8 @@ def remove(board):
                     board[x][pullDownY] = board[x][pullDownY-1] # 지워지는 보드 라인 위에 쌓인 블록들을 밑으로 내린다
             for x in range(BOARDWIDTH):
                 board[x][0] = BLANK # 빈 공간 없이 라인이 블록으로 가득찰 경우 그 라인의 보드들을 비운다
-                soundObj = pg.mixer.Sound('../Sound/clear.wav')
-                soundObj.play()
+                removesound = pg.mixer.Sound('../Sound/clear.wav') # 블록 삭제 관련 효과음 출력
+                removesound.play()
             removeline += 1 # 지워진 라인 수 카운트 값 증가
         else:
             y -= 1

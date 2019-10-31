@@ -33,15 +33,20 @@ def main():
 
             elif event.type == pg.KEYDOWN:
                     if event.key == pg.K_1: # 1번이 눌렸을 경우 직접 플레이로
+                        soundObj = pg.mixer.Sound('../Sound/key.wav')  # 키보드 관련 효과음 출력
+                        soundObj.play()
                         Playtetris.Run(GAME,FPS,MFont)
                     elif event.key ==  pg.K_2: # 2번이 눌렸을 경우 AI 플레이로
-                        AItetris.Run(GAME,FPS,MFont)
+                        soundObj = pg.mixer.Sound('../Sound/key.wav')  # 키보드 관련 효과음 출력
+                        soundObj.play()
+                        AItetris.Run(GAME,FPS,SFont)
 
         GAME.fill(BLACK)
         TFont = pg.font.SysFont('Snap ITC', 100) # 게임 화면 타이틀 폰트
         GOsurf = TFont.render("Tetris", True, FontColor) # 타이틀 렌더링
         GAME.blit(GOsurf, (x - 150, y - 150)) # 타이틀 배치
         MFont = pg.font.SysFont('monaco', 50) # 게임 화면 텍스트 폰트
+        SFont = pg.font.SysFont('monaco', 35) # 게임 화면 텍스트 폰트
         text = MFont.render("1. Play tetris", True, WHITE) # 텍스트 렌더링
         text2 = MFont.render("2. Watch Ai play tetris", True, WHITE)
         GAME.blit(text, (x - 120, y + 120))

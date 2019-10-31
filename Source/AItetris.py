@@ -1,6 +1,28 @@
 import pygame as pg
 import random, time, sys
-import math, copy, numpy, pyautogui
+import copy,numpy,pyautogui,math
+
+# Define settings and constants
+pyautogui.PAUSE = 0.03
+pyautogui.FAILSAFE = True
+
+# 게임 가로 세로 사이즈
+WINDOWWIDTH = 800
+WINDOWHEIGHT = 640
+
+#블록 사이즈,가로,세로 길이
+BOXSIZE = 30
+BOXWIDTH = 5
+BOXHEIGHT = 5
+
+#보드 가로, 세로 길이
+BOARDWIDTH = 10
+BOARDHEIGHT = 20
+
+BLANK = '0' # 빈 공간
+
+XMARGIN = int((WINDOWWIDTH - BOARDWIDTH * BOXSIZE) / 2)
+YMARGIN = WINDOWHEIGHT - (BOARDHEIGHT * BOXSIZE) - 5
 
 WHITE       = (255, 255, 255) # 텍스트 폰트 색상
 BLACK       = (  0,   0,   0) #배경색
@@ -18,208 +40,78 @@ LIGHTGREEN  = ( 20, 175,  20)
 LIGHTBLUE   = ( 20,  20, 175)
 LIGHTYELLOW = (175, 175,  20)
 
-SIZE = [800,640] # 게임 디스플레이 사이즈
-WIDTH = SIZE[0] # 디스플레이 가로 길이
-HEIGHT = SIZE[1] # 디스플레이 세로 길이
-
-BOXSIZE = 30 # 블록 사이즈
-BOXWIDTH = 5 # 블록의 가로 길이
-BOXHEIGHT = 5 # 블록의 세로 길이
-
-BOARDWIDTH = 10 # 게임 보드 가로 길이
-BOARDHEIGHT = 20 # 게임 보드 세로 길이
-
-BLANK = '.' # 빈 공간 생성
+# 보드 그리고 텍스트 색상들
+BORDERCOLOR = BLUE
+BGCOLOR = BLACK
+TEXTCOLOR = WHITE
+TEXTSHADOWCOLOR = GRAY
 
 #컬러의 튜플화를 통한 랜덤 색상 지정 구현
 COLORS =(BLUE, GREEN, RED, YELLOW)
 LIGHTCOLORS = (LIGHTBLUE, LIGHTGREEN, LIGHTRED, LIGHTYELLOW)
 
-XMARGIN = int((WIDTH - BOARDWIDTH * BOXSIZE) / 2) # 디스플레이에서 보드까지 떨어진 X 값
-YMARGIN = HEIGHT -(BOARDHEIGHT * BOXSIZE) - 5 # 디스플레이에서 보드까지 떨어진 Y 값
+# 블록 디자인
+S_SHAPE_TEMPLATE = [['00000', '00000', '00110', '01100', '00000'],
+                    ['00000', '00100', '00110', '00010', '00000']]
 
-#블록들의 각기 다른 모양 디자인
-S = [               ['.....',
-                     '.....',
-                     '..0O.',
-                     '.OO..',
-                     '.....'],
-                    ['.....',
-                     '..O..',
-                     '..OO.',
-                     '...O.',
-                     '.....']]
+Z_SHAPE_TEMPLATE = [['00000', '00000', '01100', '00110', '00000'],
+                    ['00000', '00100', '01100', '01000', '00000']]
 
-Z= [                ['.....',
-                     '.....',
-                     '.OO..',
-                     '..OO.',
-                     '.....'],
-                    ['.....',
-                     '..O..',
-                     '.OO..',
-                     '.O...',
-                     '.....']]
+I_SHAPE_TEMPLATE = [['00100', '00100', '00100', '00100', '00000'],
+                    ['00000', '00000', '11110', '00000', '00000']]
 
-I = [               ['..O..',
-                     '..O..',
-                     '..O..',
-                     '..O..',
-                     '.....'],
-                    ['.....',
-                     '.....',
-                     'OOOO.',
-                     '.....',
-                     '.....']]
+O_SHAPE_TEMPLATE = [['00000', '00000', '01100', '01100', '00000']]
 
-O = [               ['.....',
-                     '.....',
-                     '.OO..',
-                     '.OO..',
-                     '.....']]
+J_SHAPE_TEMPLATE = [['00000', '01000', '01110', '00000',
+                     '00000'], ['00000', '00110', '00100', '00100', '00000'],
+                    ['00000', '00000', '01110', '00010',
+                     '00000'], ['00000', '00100', '00100', '01100', '00000']]
+L_SHAPE_TEMPLATE = [['00000', '00010', '01110', '00000',
+                     '00000'], ['00000', '00100', '00100', '00110', '00000'],
+                    ['00000', '00000', '01110', '01000',
+                     '00000'], ['00000', '01100', '00100', '00100', '00000']]
 
-J = [               ['.....',
-                     '.O...',
-                     '.OOO.',
-                     '.....',
-                     '.....'],
-                    ['.....',
-                     '..OO.',
-                     '..O..',
-                     '..O..',
-                     '.....'],
-                    ['.....',
-                     '.....',
-                     '.OOO.',
-                     '...O.',
-                     '.....'],
-                    ['.....',
-                     '..O..',
-                     '..O..',
-                     '.OO..',
-                     '.....']]
+T_SHAPE_TEMPLATE = [['00000', '00100', '01110', '00000',
+                     '00000'], ['00000', '00100', '00110', '00100', '00000'],
+                    ['00000', '00000', '01110', '00100',
+                     '00000'], ['00000', '00100', '01100', '00100', '00000']]
+PIECES = {
+    'S': S_SHAPE_TEMPLATE,
+    'Z': Z_SHAPE_TEMPLATE,
+    'J': J_SHAPE_TEMPLATE,
+    'L': L_SHAPE_TEMPLATE,
+    'I': I_SHAPE_TEMPLATE,
+    'O': O_SHAPE_TEMPLATE,
+    'T': T_SHAPE_TEMPLATE
+}
 
-L = [               ['.....',
-                     '...O.',
-                     '.OOO.',
-                     '.....',
-                     '.....'],
-                    ['.....',
-                     '..O..',
-                     '..O..',
-                     '..OO.',
-                     '.....'],
-                    ['.....',
-                     '.....',
-                     '.OOO.',
-                     '.O...',
-                     '.....'],
-                    ['.....',
-                     '.OO..',
-                     '..O..',
-                     '..O..',
-                     '.....']]
-
-T= [                ['.....',
-                     '..O..',
-                     '.OOO.',
-                     '.....',
-                     '.....'],
-                    ['.....',
-                     '..O..',
-                     '..OO.',
-                     '..O..',
-                     '.....'],
-                    ['.....',
-                     '.....',
-                     '.OOO.',
-                     '..O..',
-                     '.....'],
-                    ['.....',
-                     '..O..',
-                     '.OO..',
-                     '..O..',
-                     '.....']]
-
-#블록들의 딕셔너리화를 통해 마찬가지로 랜덤 선택 구현
-PIECES = {'S': S,
-          'Z': Z,
-          'J': J,
-          'L': L,
-          'I': I,
-          'O': O,
-          'T': T}
-
-# 머신 러닝 관련 파라미터 값
+# Define learning parameters
 alpha = 0.01
 gamma = 0.9
-MAX_GAMES = 20
+MAX_GAMES = 3
 explore_change = 0.5
 weights = [-1, -1, -1, -30]  # Initial weight vector
 
-def make_text_objs(text, font, color):
-    surf = font.render(text, True, color) # 받은 폰트를 기준으로 텍스트 렌더링
-    return surf, surf.get_rect()
-
-def show_text_screen(text): # 화면에 텍스트 배치
-    # 텍스트 그림자 효과
-    title_surf, title_rect = make_text_objs(text, MainFont, GRAY)
-    title_rect.center = (int(WIDTH / 2), int(HEIGHT / 2))
-    GAME.blit(title_surf, title_rect)
-
-    # 타이틀 텍스트 렌더링
-    title_surf, title_rect = make_text_objs(text, MainFont, WHITE)
-    title_rect.center = (int(WIDTH / 2) - 3, int(HEIGHT / 2) - 3)
-    GAME.blit(title_surf, title_rect)
-
-    # 부가 설명 텍스트 렌더링
-    press_key_surf, press_key_rect = make_text_objs('Please wait to continue.',
-                                                    MainFont, WHITE)
-    press_key_rect.center = (int(WIDTH / 2), int(HEIGHT / 2) + 100)
-    GAME.blit(press_key_surf, press_key_rect)
-
-    pg.display.update()
-    FPS.tick()
-    time.sleep(0.5)
-
-def Run(g,f,m):
-    global GAME, FPS, MainFont
-    global weights,explore_change,games_completed
-    GAME=g
-    FPS=f
-    MainFont=m
-
-    games_completed = 0
-    time.sleep(5)
-    while True:
-        games_completed += 1 # 게임이 돌 때 마다 카운트
-        newScore, weights, explore_change = Run_game(weights, explore_change)
-        print("Game Number ", games_completed, " achieved a score of: ", newScore) # 콘솔에 한번 돌때마다 해당 스코어 출력
-        show_text_screen('Game Over')
-        if games_completed > 20 : # 총 20번 돌면 게임 종료
-            break
-
 def Run_game(weights, explore_change):
-    board = getBlankBoard()  # 게임 맵에 해당하는 보드 생성
-    score = 0  # 게임 스코어 초기화
-    level = 0 # 게임 레벨 초기화
-    fallsp = 0.2 # 게임 레벨과 블록 떨어지는 속도 값 초기화
-    lastFallTime = time.time()  # 1초 간격으로 블록이 떨어지는 효과를 위한 시간 체킹
-    fallingPiece = getNewPiece()  # 떨어지는 블록 생성
-    nextPiece = getNewPiece()  # 다음 블록 생성
+    board = get_blank_board() # 보드 생성
+    score = 0 # 스코어 초기화
+    level, fall_freq = get_level_and_fall_freq(score) # 레벨 그리고 블록 떨어지는 속도 초기화
+    current_move = [0, 0]  # 블록의 최적화 움직임
+    falling_piece = get_new_piece() # 떨어지는 블록을 받고
+    next_piece = get_new_piece() # 다음 블록 만든다
+    last_fall_time = time.time() # 1초마다 블록이 떨어진다
 
-    current_move = [0, 0]  # Relative Rotation, lateral movement
+    while True:
+        if falling_piece is None:
+            # 떨어지는 블록이 없으면 다음 블록을 받는다
+            falling_piece = next_piece
+            next_piece = get_new_piece()
+            last_fall_time = time.time()  # reset last_fall_time
 
-    check = True
-    while check:
-        if fallingPiece == None:  # 떨어지는 블록이 없을 경우
-            fallingPiece = nextPiece  # 다음 블록으로 교체
-            nextPiece = getNewPiece()  # 새로운 블록을 받는다
-            lastFallTime = time.time()
-
-            if not CHpiece(board, fallingPiece):  # 블록이 게임 보드 보다 높게 쌓였을 경우 게임 오버
-                return score, weights, explore_change
-            current_move, weights = gradient_descent(board, fallingPiece, weights,
+            if not is_valid_position(board, falling_piece): # 보드보다 블록이 더 높게 쌓였을 경우
+                # can't fit a new piece on the board, so game over
+                return score, weights, explore_change # 게임 오버로 인한 스코어, 학습 값 상태를 리턴
+            current_move, weights = gradient_descent(board, falling_piece, weights,
                                                      explore_change)
             if explore_change > 0.001:
                 explore_change = explore_change * 0.99
@@ -227,165 +119,229 @@ def Run_game(weights, explore_change):
                 explore_change = 0
 
         current_move = make_move(current_move)
-        for event in pg.event.get():
+        for event in pg.event.get():  # event handling loop
             if event.type == pg.QUIT:
                 check = False
                 sys.exit()
 
-            elif event.type == pg.KEYDOWN:
-                if event.key == pg.K_LEFT and CHpiece(board, fallingPiece, X=-1):  # 왼쪽 방향키가 눌렸을 때
-                    fallingPiece['x'] -= 1  # 떨어지는 블록 왼쪽으로 이동
-                elif event.key == pg.K_RIGHT and CHpiece(board, fallingPiece, X=1):  # 오른쪽 방향키가 눌렸을 때
-                    fallingPiece['x'] += 1  # 떨어지는 블록 오른쪽 이동
-                elif event.key == pg.K_DOWN and CHpiece(board, fallingPiece, Y=1):  # 밑 방향키가 눌렸을 때
-                    fallingPiece['y'] += 1  # 떨어지는 블록 밑으로 이동
-                elif event.key == pg.K_SPACE:  # 스페이스 키가 눌렸을 때
-                    for i in range(BOARDHEIGHT):
-                        if not CHpiece(board, fallingPiece, Y=i):
-                            break  # 떨어지려는 구간이 더 이상 없을 경우 스페이스 기능 block
-                    fallingPiece['y'] += i - 1  # 블록을 제일 밑으로 떨어트린다
-                elif event.key == pg.K_UP:  # 윗 방향키가 눌렸을 때
-                    fallingPiece['rotation'] = (fallingPiece['rotation'] + 1) % len(PIECES[fallingPiece['shape']])  # 블록의 모양 변화
-                    if not CHpiece(board, fallingPiece):
-                        fallingPiece['rotation'] = (fallingPiece['rotation'] - 1) % len(PIECES[fallingPiece['shape']])
+            if event.type == pg.KEYDOWN:
+                if (event.key == pg.K_LEFT or event.key == pg.K_a) and is_valid_position(
+                            board, falling_piece, adj_x=-1): # 왼쪽 방향키
+                    falling_piece['x'] -= 1
+                elif (event.key == pg.K_RIGHT or event.key == pg.K_d) and is_valid_position(
+                          board, falling_piece, adj_x=1): # 오른쪽 방향키
+                    falling_piece['x'] += 1
+                elif (event.key == pg.K_UP or event.key == pg.K_w): # 위 방향키
+                    falling_piece['rotation'] = (falling_piece['rotation'] + 1) % len(PIECES[falling_piece['shape']])
+                    if not is_valid_position(board, falling_piece):
+                        falling_piece['rotation'] = (falling_piece['rotation'] - 1) % len(PIECES[falling_piece['shape']])
+                elif (event.key == pg.K_DOWN or event.key == pg.K_s): # 아래 방향키
+                    if is_valid_position(board, falling_piece, adj_y=1):
+                        falling_piece['y'] += 1
+                elif event.key == pg.K_SPACE: # 스페이스 키
+                    for i in range(1, BOARDHEIGHT):
+                        if not is_valid_position(board, falling_piece, adj_y=i):
+                            break
+                    falling_piece['y'] += i - 1
 
-        if time.time() - lastFallTime > fallsp:
-            if not CHpiece(board, fallingPiece, Y=1):
-                addToBoard(board, fallingPiece)  # 보드에 해당 블록을 채운다
-                score += remove(board)  # 지워진 라인 수 만큼 스코어 증가
-                level = int(score/3)  # 레벨은 3배수 단위로
-                fallingPiece = None  # 떨어지는 블록은 현재 없다
+        if time.time() - last_fall_time > fall_freq: # 블록이 제시간에 맞게 떨어진 경우
+            if not is_valid_position(board, falling_piece, adj_y=1):
+                add_to_board(board, falling_piece) # 보드에 해당 블록을 채운다
+                lines, board = remove_complete_lines(board) # 지워진 라인 수를 받아
+                score += lines * lines # 스코어에 증가
+                level, fall_freq = get_level_and_fall_freq(score) # 레벨과 떨어지는 속도 조정
+                falling_piece = None # 떨어지는 블록은 현재 없다
             else:
                 # 1초 간격으로 블록이 떨어지게 y 좌표 변화
-                fallingPiece['y'] += 1
-                lastFallTime = time.time()
+                falling_piece['y'] += 1
+                last_fall_time = time.time()
+        GAME.fill(BGCOLOR)
+        draw_board(board)
+        draw_status(score, level, current_move,games_completed)
+        draw_next_piece(next_piece)
+        if falling_piece is not None:
+            draw_piece(falling_piece)
 
-        GAME.fill(BLACK)  # 게임 배경색을 검은색으로
-        drawBoard(board)  # 보드를 화면에 렌더링
-        drawStatus(score, level)  # 스코어와 레벨 텍스트 렌더링
-        NextPiece_info(nextPiece)  # 다음 블록 렌더링
-        if fallingPiece != None:
-            drawPiece(fallingPiece)  # 떨어지는 블록 렌더링
+        pg.display.update()
+        FPS.tick(30) # 30 프레임으로 게임 동작
 
-        pg.display.update()  # 디스플레이 업데이트
-        FPS.tick(30)  # 30 프레임으로 진행
+def make_text_objs(text, font, color):
+    surf = font.render(text, True, color) # 폰트 렌더링
+    return surf, surf.get_rect()
 
-def CHpiece(board, piece, X=0, Y=0):
+def show_text_screen(text): # 화면에 해당하는 내용 텍스트 출력
+    title_surf, title_rect = make_text_objs(text, SubFont, TEXTSHADOWCOLOR)
+    title_rect.center = (int(WINDOWWIDTH / 2), int(WINDOWHEIGHT / 2))
+    GAME.blit(title_surf, title_rect)
+
+    title_surf, title_rect = make_text_objs(text, SubFont, TEXTCOLOR)
+    title_rect.center = (int(WINDOWWIDTH / 2) - 3, int(WINDOWHEIGHT / 2) - 3)
+    GAME.blit(title_surf, title_rect)
+
+    press_key_surf, press_key_rect = make_text_objs('Please wait to continue.',
+                                                    SubFont, TEXTCOLOR)
+    press_key_rect.center = (int(WINDOWWIDTH / 2), int(WINDOWHEIGHT / 2) + 100)
+    GAME.blit(press_key_surf, press_key_rect)
+
+    pg.display.update()
+    FPS.tick()
+    time.sleep(0.5)
+
+def get_level_and_fall_freq(score):
+    level = int(score / 3)  # 스코어 3배수 마다 레벨 증가
+    if level < 6:  # 레벨 6전까진 떨어지는 속도 감소
+        fallsp = 0.6 - (level * 0.1) + 0.1
+    else:  # 6 이후론 일정 속도로 유지
+        fallsp = 0.2
+
+    return level, fallsp  # 레벨 과 떨어지는 속도 값 리턴
+
+def get_new_piece():
+    # 랜덤함수로 새로운 블록 지정
+    shape = random.choice(list(PIECES.keys()))
+    new_piece = {
+        'shape': shape,
+        'rotation': random.randint(0,
+                                   len(PIECES[shape]) - 1),
+        'x': int(BOARDWIDTH / 2) - int(BOXWIDTH / 2),
+        'y': -2,  # start it above the board (i.e. less than 0)
+        'color': random.randint(1,
+                                len(COLORS) - 1)
+    }
+    return new_piece
+
+def add_to_board(board, piece):
     for x in range(BOXWIDTH):
         for y in range(BOXHEIGHT):
-            ispiece = y + piece['y'] + Y
-            if ispiece < 0 or PIECES[piece['shape']][piece['rotation']][y][x] == BLANK: # 블록 떨어지는 구간이 빈 공간일 경우
-                continue # 남은 블록 관련 점검을 진행한다
-            if not isOnBoard(x + piece['x'] + X, y + piece['y'] + Y):
-                return False # 블록이 보드 틀을 벗어나려 한다면 false를 리턴
-            if board[x + piece['x'] + X][y + piece['y'] + Y] != BLANK:
-                return False # 블록 떨어지는 구간이 빈 공간이 아닐 경우 false를 리턴
-    return True
+            if PIECES[piece['shape']][piece['rotation']][y][x] != BLANK and x + piece['x'] < 10 and y + piece['y'] < 20: # 블록이 떨어지려는 해당 보드 구간이 빈 공간이 아닐 경우
+                board[x + piece['x']][y + piece['y']] = piece['color']# 블록과 같은 색상으로 해당 보드 구간을 채운다
 
-def getBlankBoard():
+def get_blank_board():
+    # 정해둔 보드 가로 세로 사이즈 만큼 보드 배열 생성
     board = []
-    for i in range(BOARDWIDTH):
-        board.append([BLANK] * BOARDHEIGHT) # 정해둔 맵 가로,세로 사이즈 만큼 보드를 배열로 구성
-    return board # 보드 배열 리턴
+    for _ in range(BOARDWIDTH):
+        board.append(['0'] * BOARDHEIGHT)
+    return board
 
-def getNewPiece():
-    shape = random.choice(list(PIECES.keys())) # 랜덤함수로 새로운 블록 지정
-    newPiece = {'shape': shape, # 블록의 모양
-                'rotation': random.randint(0, len(PIECES[shape]) - 1), # 블록의 회전 방향
-                # 블록의 X,Y 좌표를 화면 한 가운데로 지정
-                'x': int(BOARDWIDTH / 2) - int(BOXWIDTH / 2),
-                'y': -2,
-                'color': random.randint(0, len(COLORS)-1)} # 블록 색상 역시 랜덤 지정
-    return newPiece # 만들어진 블록을 리턴
-
-def isOnBoard(x, y):
+def is_on_board(x, y):
     return x >= 0 and x < BOARDWIDTH and y < BOARDHEIGHT # 블록이 보드 안에 있을 경우 true를 리턴
 
-def drawStatus(score, level):
-    scoreSurf = MainFont.render('Score: %s' % score, True, WHITE) # 화면에 스코어 텍스트 렌더링
-    GAME.blit(scoreSurf, (WIDTH - 150, 20)) # 텍스트 배치
-
-    levelSurf = MainFont.render('Level: %s' % level, True, WHITE) # 화면에 레벨 텍스트 렌더링
-    GAME.blit(levelSurf, (WIDTH - 150, 60))
-
-    ailevelSurf = MainFont.render('Learn level : %s' % games_completed, True, WHITE)  # 화면에 레벨 텍스트 렌더링
-    GAME.blit(ailevelSurf, (0, 120))
-
-def addToBoard(board, piece):
+def is_valid_position(board, piece, adj_x=0, adj_y=0):
     for x in range(BOXWIDTH):
         for y in range(BOXHEIGHT):
-            if PIECES[piece['shape']][piece['rotation']][y][x] != BLANK:# 블록이 떨어지려는 해당 보드 구간이 빈 공간이 아닐 경우
-                board[x + piece['x']][y + piece['y']] = piece['color'] # 블록과 같은 색상으로 해당 보드 구간을 채운다
+            is_above_board = y + piece['y'] + adj_y < 0
+            if is_above_board or PIECES[piece['shape']][piece['rotation']][y][x] == BLANK: # 블록 떨어지는 구간이 빈 공간일 경우
+                continue # 남은 블록 관련 점검을 진행한다
+            if not is_on_board(x + piece['x'] + adj_x, y + piece['y'] + adj_y):
+                return False  # 블록이 보드 틀을 벗어나려 한다면 false를 리턴
+            if board[x + piece['x'] + adj_x][y + piece['y'] + adj_y] != BLANK:
+                return False  # 블록 떨어지는 구간이 빈 공간이 아닐 경우 false를 리턴
+    return True
 
-def remove(board):
-    removeline = 0
-    y = BOARDHEIGHT - 1
-    while y >= 0:
-        if isCompleteLine(board, y):
-            for pullDownY in range(y, 0, -1):
-                for x in range(BOARDWIDTH):
-                    board[x][pullDownY] = board[x][pullDownY-1] # 지워지는 보드 라인 위에 쌓인 블록들을 밑으로 내린다
-            for x in range(BOARDWIDTH):
-                board[x][0] = BLANK # 빈 공간 없이 라인이 블록으로 가득찰 경우 그 라인의 보드들을 비운다
-            removeline += 1 # 지워진 라인 수 카운트 값 증가
-        else:
-            y -= 1
-    return removeline # 지워진 라인 수 리턴
 
-def isCompleteLine(board, y):
+def is_complete_line(board, y):
     for x in range(BOARDWIDTH):
         if board[x][y] == BLANK: # 보드의 라인에 빈 공간이 있을 경우
             return False #false를 리턴
     return True # 그 반대일 경우 true 리턴
 
-def drawBoard(board):
-    pg.draw.rect(GAME, BLUE, (XMARGIN - 3, YMARGIN - 7, (BOARDWIDTH * BOXSIZE) + 8, (BOARDHEIGHT * BOXSIZE) + 8), 5) # 코딩 해둔 보드 배열을 화면에 렌더링 한다
 
-    for x in range(BOARDWIDTH):
-        for y in range(BOARDHEIGHT):
-            drawBox(x, y, board[x][y])
+def remove_complete_lines(board):
+    lines_removed = 0
+    y = BOARDHEIGHT - 1
+    while y >= 0:
+        if is_complete_line(board, y):
+            for pull_down_y in range(y, 0, -1):
+                for x in range(BOARDWIDTH):
+                    board[x][pull_down_y] = board[x][pull_down_y - 1] # 지워지는 보드 라인 위에 쌓인 블록들을 밑으로 내린다
+            for x in range(BOARDWIDTH):
+                board[x][0] = BLANK # 빈 공간 없이 라인이 블록으로 가득찰 경우 그 라인의 보드들을 비운다
+            lines_removed += 1# 지워진 라인 수 카운트 값 증가
+        else:
+            y -= 1
+    return lines_removed, board
 
-def drawBox(boxx, boxy, color, pixelx=None, pixely=None): # 보드 안에 꾸준하게 이벤트가 일어나는 블록 내용들을 렌더링
+def convert_to_pixel_coords(boxx, boxy):
+    # Convert the given xy coordinates of the board to xy
+    # coordinates of the location on the screen.
+    return (XMARGIN + (boxx * BOXSIZE)), (YMARGIN + (boxy * BOXSIZE))
+
+def draw_box(boxx, boxy, color, pixelx=None, pixely=None):# 보드 안에 꾸준하게 이벤트가 일어나는 블록 내용들을 렌더링
     for i in range(BOARDWIDTH):
-        pg.draw.line(GAME, GRAY, ((XMARGIN+10)+(i*BOXSIZE-10), YMARGIN-3), ((XMARGIN+10)+(i*BOXSIZE-10) , YMARGIN+600),2) # 보드 사선 중 세로 선 그리기
+        pg.draw.line(GAME, GRAY, ((XMARGIN + 10) + (i * BOXSIZE - 10), YMARGIN - 3),
+                     ((XMARGIN + 10) + (i * BOXSIZE - 10), YMARGIN + 600), 2)  # 보드 사선 중 세로 선 그리기
     for j in range(BOARDHEIGHT):
-        pg.draw.line(GAME, GRAY, (XMARGIN, (YMARGIN-3)+(j*BOXSIZE)), (XMARGIN + 300, (YMARGIN-3)+(j*BOXSIZE)),2) # 보드 사선 중 가로 선 그리기
+        pg.draw.line(GAME, GRAY, (XMARGIN, (YMARGIN - 3) + (j * BOXSIZE)),
+                     (XMARGIN + 300, (YMARGIN - 3) + (j * BOXSIZE)), 2)  # 보드 사선 중 가로 선 그리기
 
     if color == BLANK:
         return
-    if pixelx == None and pixely == None:
-        pixelx, pixely = Pixel(boxx, boxy)
-    pg.draw.rect(GAME, COLORS[color], (pixelx , pixely , BOXSIZE - 1, BOXSIZE - 1))
-    pg.draw.rect(GAME, LIGHTCOLORS[color], (pixelx + 1, pixely + 1, BOXSIZE - 10, BOXSIZE - 10))
+    if pixelx is None and pixely is None:
+        pixelx, pixely = convert_to_pixel_coords(boxx, boxy)
+    pg.draw.rect(GAME, COLORS[color],
+                     (pixelx + 1, pixely + 1, BOXSIZE - 1, BOXSIZE - 1))
+    pg.draw.rect(GAME, LIGHTCOLORS[color],
+                     (pixelx + 1, pixely + 1, BOXSIZE - 4, BOXSIZE - 4))
 
-def NextPiece_info(piece):
-    MFont = pg.font.SysFont('monaco', 50)
-    nextSurf = MFont.render('Next:', True, WHITE)
-    GAME.blit(nextSurf, (WIDTH - 120, 100)) # 화면 오른쪽에 다음 블록 관련 텍스트 배치
+def draw_board(board):
+    # 코딩 해둔 보드 배열을 화면에 렌더링 한다
+    pg.draw.rect(GAME, BORDERCOLOR,
+                     (XMARGIN - 3, YMARGIN - 7, (BOARDWIDTH * BOXSIZE) + 8,
+                      (BOARDHEIGHT * BOXSIZE) + 8), 5)
+    # fill the background of the board
+    pg.draw.rect(
+        GAME, BGCOLOR,
+        (XMARGIN, YMARGIN, BOXSIZE * BOARDWIDTH, BOXSIZE * BOARDHEIGHT))
+    # draw the individual boxes on the board
+    for x in range(BOARDWIDTH):
+        for y in range(BOARDHEIGHT):
+            draw_box(x, y, board[x][y])
 
-    drawPiece(piece, pixelx=WIDTH-150, pixely=130)
 
-def drawPiece(piece, pixelx=None, pixely=None):
-    shapeToDraw = PIECES[piece['shape']][piece['rotation']]
-    if pixelx == None and pixely == None:
-        pixelx, pixely = Pixel(piece['x'], piece['y']) # 화면에 렌더링 해야할 블록 x,y 좌표를 픽셀 x,y로 받는다
+def draw_status(score, level, best_move, games_completed): # 화면에 스코어 레벨, 학습상태 그리고 다음 최적화된 블록 방향을 렌더링
+    # draw the score text
+    score_surf = SubFont.render('Score: %s' % score, True, TEXTCOLOR)
+    score_rect = score_surf.get_rect()
+    score_rect.topleft = (WINDOWWIDTH - 200, 20)
+    GAME.blit(score_surf, score_rect)
+
+    # draw the level text
+    level_surf = SubFont.render('Level: %s' % level, True, TEXTCOLOR)
+    level_rect = level_surf.get_rect()
+    level_rect.topleft = (WINDOWWIDTH - 200, 50)
+    GAME.blit(level_surf, level_rect)
+
+    # draw the best_move text
+    move_surf = SubFont.render('Current Move: %s' % best_move, True, TEXTCOLOR)
+    move_rect = move_surf.get_rect()
+    move_rect.topleft = (WINDOWWIDTH - 230, 300)
+    GAME.blit(move_surf, move_rect)
+
+    # draw the best_move text
+    move_surf = SubFont.render('Learing level : %s' % games_completed, True, TEXTCOLOR)
+    move_rect = move_surf.get_rect()
+    move_rect.topleft = (20, 150)
+    GAME.blit(move_surf, move_rect)
+
+def draw_piece(piece, pixelx=None, pixely=None):
+    shape_to_draw = PIECES[piece['shape']][piece['rotation']]
+    if pixelx is None and pixely is None:
+        # 화면에 렌더링 해야할 블록 x,y 좌표를 픽셀 x,y로 받는다
+        pixelx, pixely = convert_to_pixel_coords(piece['x'], piece['y'])
 
     for x in range(BOXWIDTH):
         for y in range(BOXHEIGHT):
-            if shapeToDraw[y][x] != BLANK:
-                drawBox(None, None, piece['color'], pixelx + (x * BOXSIZE), pixely + (y * BOXSIZE))
+            if shape_to_draw[y][x] != BLANK:
+                draw_box(None, None, piece['color'], pixelx + (x * BOXSIZE), pixely + (y * BOXSIZE))
 
-def Pixel(boxx, boxy):
-    return (XMARGIN + (boxx * BOXSIZE)), (YMARGIN + (boxy * BOXSIZE))
-
-
-
-
-
-
-
-
-
+def draw_next_piece(piece): # 화면에 다음 블록 모양 렌더링
+    # draw the "next" text
+    next_surf = SubFont.render('Next:', True, TEXTCOLOR)
+    next_rect = next_surf.get_rect()
+    next_rect.topleft = (WINDOWWIDTH - 200, 80)
+    GAME.blit(next_surf, next_rect)
+    # draw the "next" piece
+    draw_piece(piece, pixelx=WINDOWWIDTH - 180, pixely=100)
 
 def get_parameters(board):
     # This function will calculate different parameters of the current board
@@ -399,7 +355,7 @@ def get_parameters(board):
     # Calculate the maximum height of each column
     for i in range(0, BOARDWIDTH):  # Select a column
         for j in range(0, BOARDHEIGHT):  # Search down starting from the top of the board
-            if board[i][j]!=BLANK:  # Is the cell occupied?
+            if int(board[i][j]) > 0:  # Is the cell occupied?
                 heights[i] = BOARDHEIGHT - j  # Store the height value
                 break
 
@@ -414,15 +370,16 @@ def get_parameters(board):
     for i in range(0, BOARDWIDTH):
         occupied = 0  # Set the 'Occupied' flag to 0 for each new column
         for j in range(0, BOARDHEIGHT):  # Scan from top to bottom
-            if board[i][j]!=BLANK:
+            if int(board[i][j]) > 0:
                 occupied = 1  # If a block is found, set the 'Occupied' flag to 1
-            if board[i][j]==BLANK and occupied == 1:
+            if int(board[i][j]) == 0 and occupied == 1:
                 holes += 1  # If a hole is found, add one to the count
 
     height_sum = sum(heights)
     for i in diffs:
         diff_sum += abs(i)
     return height_sum, diff_sum, max_height, holes
+
 
 def get_expected_score(test_board, weights):
     # This function calculates the score of a given board state, given weights and the number
@@ -434,6 +391,7 @@ def get_expected_score(test_board, weights):
     D = weights[3]
     test_score = float(A * height_sum + B * diff_sum + C * max_height + D * holes)
     return test_score
+
 
 def simulate_board(test_board, test_piece, move):
     # This function simulates placing the current falling piece onto the
@@ -455,24 +413,25 @@ def simulate_board(test_board, test_piece, move):
         test_piece['rotation'] = (test_piece['rotation'] + 1) % len(PIECES[test_piece['shape']])
 
     # Test for move validity!
-    if not CHpiece(test_board, test_piece, Ⅹ=sideways, Y=0):
+    if not is_valid_position(test_board, test_piece, adj_x=sideways, adj_y=0):
         # The move itself is not valid!
         return None
 
     # Move the test_piece to collide on the board
     test_piece['x'] += sideways
     for i in range(0, BOARDHEIGHT):
-        if CHpiece(test_board, test_piece, Ⅹ=0, Y=1):
+        if is_valid_position(test_board, test_piece, adj_x=0, adj_y=1):
             test_piece['y'] = i
 
     # Place the piece on the virtual board
-    if CHpiece(test_board, test_piece, X=0, Y=0):
-        CHpiece(test_board, test_piece)
-        test_lines_removed= remove(test_board)
+    if is_valid_position(test_board, test_piece, adj_x=0, adj_y=0):
+        add_to_board(test_board, test_piece)
+        test_lines_removed, test_board = remove_complete_lines(test_board)
 
     height_sum, diff_sum, max_height, holes = get_parameters(test_board)
     one_step_reward = 5 * (test_lines_removed * test_lines_removed) - (height_sum - reference_height)
     return test_board, one_step_reward
+
 
 def find_best_move(board, piece, weights, explore_change):
     move_list = []
@@ -496,6 +455,7 @@ def find_best_move(board, piece, weights, explore_change):
         move = best_move
     return move
 
+
 def make_move(move):
     # This function will make the indicated move, with the first digit
     # representing the number of rotations to be made and the seconds
@@ -517,6 +477,7 @@ def make_move(move):
 
     return [rot, sideways]
 
+
 def gradient_descent(board, piece, weights, explore_change):
     move = find_best_move(board, piece, weights, explore_change)
     old_params = get_parameters(board)
@@ -534,3 +495,23 @@ def gradient_descent(board, piece, weights, explore_change):
         weights[i] = 100 * weights[i] / regularization_term
         weights[i] = math.floor(1e4 * weights[i]) / 1e4  # Rounds the weights
     return move, weights
+
+
+def Run(g,f,s):
+    global GAME, FPS, SubFont
+    global weights,explore_change, games_completed
+    GAME = g
+    FPS = f
+    SubFont = s
+
+    games_completed = 0
+    while True:  # game loop
+        games_completed += 1
+        newScore, weights, explore_change = Run_game(weights, explore_change)
+        print("Game Number ", games_completed, " achieved a score of: ", newScore )
+        if games_completed == MAX_GAMES: # 총 20번의 게임을 반복하면 게임 종료
+            show_text_screen('Game Finish')
+            time.sleep(3)
+            return
+        else:
+            show_text_screen('Game Over') # 아닐경우 계속해서 플레이
