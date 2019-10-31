@@ -1,5 +1,13 @@
 # AI_Tetris
     교육용 소프트웨어 경진대회 참가 작품
+# Prerequisites
+      Python 3.x
+      
+      Pygame
+      
+      numpy
+      
+      pyautogui
 # Open-Source
 https://github.com/scuriosity/machine-learning-tetris
 
