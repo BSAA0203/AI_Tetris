@@ -21,6 +21,8 @@ def main():
     pg.display.set_caption('Tetris') # 디스플레이 타이틀 생성
     pg.display.set_icon(pg.image.load("../img/tetris.png"))
     FPS = pg.time.Clock() # 게임 프레임 옵션
+    pg.mixer.music.load('../Sound/bgm.mp3') # 게임 BGM
+    pg.mixer.music.play(-1)
 
     check = True
     while check:

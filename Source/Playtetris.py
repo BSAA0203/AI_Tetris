@@ -311,6 +311,8 @@ def remove(board):
                     board[x][pullDownY] = board[x][pullDownY-1] # 지워지는 보드 라인 위에 쌓인 블록들을 밑으로 내린다
             for x in range(BOARDWIDTH):
                 board[x][0] = BLANK # 빈 공간 없이 라인이 블록으로 가득찰 경우 그 라인의 보드들을 비운다
+                soundObj = pg.mixer.Sound('../Sound/clear.wav')
+                soundObj.play()
             removeline += 1 # 지워진 라인 수 카운트 값 증가
         else:
             y -= 1
