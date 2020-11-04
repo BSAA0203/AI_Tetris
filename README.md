@@ -1,9 +1,9 @@
 # AI_Tetris
     교육용 소프트웨어 경진대회 참가 작품
 # Prerequisites
-      Python 3.x
+      Python V3.x.x
       
-      Pygame
+      Pygame V1.9.6
       
       numpy
       
